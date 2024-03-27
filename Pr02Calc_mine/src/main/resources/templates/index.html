@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>계산기</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="flex flex-column justify-center m-5">
+    <form class="flex flex-col w-1.0 gap-1" method="get">
+        <label class="flex justify-between">
+            숫자 1
+            <input class="bg-gray-300 border border-gray-500 p-1 text-center mx-2" name="a" type="number"
+                   th:value="|${inputA}|"/>
+        </label>
+        <label class="flex justify-between">
+            숫자 2
+            <input class="bg-gray-300 border border-gray-500 p-1 text-center mx-2" name="b" type="number"
+                   th:value="|${inputB}|"/>
+        </label>
+        <label class="flex justify-between mb-2">
+            연산 결과
+            <input class="bg-gray-500 border border-gray-500 p-1 text-center mx-2 text-white"
+                   type="text" disabled th:value="|${result}|"/>
+        </label>
+        <input class="bg-blue-500 p-1 text-white" type="submit" formaction="/add" value="덧셈"/>
+        <input class="bg-blue-500 p-1 text-white" type="submit" formaction="/sub" value="뺄셈"/>
+        <input class="bg-blue-500 p-1 text-white" type="submit" formaction="/mul" value="곱셈"/>
+        <input class="bg-blue-500 p-1 text-white" type="submit" formaction="/div" value="나눗셈"/>
+        <button class="bg-red-500 p-1 text-white" type="button" onclick="resetAB()">지우기</button>
+    </form>
+</div>
+</body>
+<script>
+    const resetAB = () => {
+        document.getElementsByName("a")[0].value = "0";
+        document.getElementsByName("b")[0].value = "0";
+    }
+</script>
+</html>
