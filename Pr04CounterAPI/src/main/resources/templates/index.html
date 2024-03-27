@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter_API</title>
+</head>
+<body>
+<h2 id="count">카운트 : 0</h2>
+<button onclick="plus()">더하기</button>
+<button onclick="minus()">빼기</button>
+
+<script>
+    function plus() {
+        fetch('/plus', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('count').innerText = '카운트 : ' + data.count;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function minus() {
+        fetch('/minus', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('count').innerText = '카운트 : ' + data.count;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>
