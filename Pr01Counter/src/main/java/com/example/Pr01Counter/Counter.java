@@ -1,4 +1,4 @@
-package com.study.Pr01Counter;
+package com.example.Pr01Counter;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

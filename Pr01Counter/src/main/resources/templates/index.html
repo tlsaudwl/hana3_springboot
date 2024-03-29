@@ -2,19 +2,60 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>카운터</title>
 </head>
 <body>
-<h2 th:text="|카운트 : ${count}|">카운트 : 0</h2>
-<button onClick="plus()">더하기</button>
-<button onClick="minus()">빼기</button>
+
+<h2 id="result" th:text="|카운트 : ${ count }|"></h2>
+<button type="button" onclick="plus()">더하기</button>
+<button type="button" onclick="minus()">빼기</button>
 
 <script>
     function plus(){
-        window.location.href = "/plus"; //http://localhost:8080/plus
+        fetch("http://localhost:8080/api/v1/plus",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ //객체를 문자열로 만듦.
+                    op: 'plus',
+                })
+            })
+            .then((response) => { //HTTP 응답객체
+                console.log(response);
+                return response.json();
+            })
+            .then((json) =>  { //JSON객체
+                //{ status: "ok", result: 5 }
+                console.log(json);
+                //응답메시지 표시하기
+                document.getElementById("result").innerText
+                     = '카운트 : ' + json.result;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
     function minus(){
-        window.location.href = "/minus" //http://localhost:8080/minus
+        fetch("http://localhost:8080/api/v1/minus",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ //객체를 문자열로 만듦.
+                    op: 'minus',
+                })
+            })
+            .then((response) => { //HTTP 응답객체
+                console.log(response);
+                return response.json();
+            })
+            .then((json) =>  { //JSON객체
+                //{ status: "ok", result: 5 }
+                console.log(json);
+                //응답메시지 표시하기
+                document.getElementById("result").innerText
+                     = '카운트 : ' + json.result;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 </script>
 </body>
