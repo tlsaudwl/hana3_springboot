@@ -34,13 +34,13 @@ public class MemberRepositoryTest extends Ex12H2DbApplicationTests {
     @DisplayName("save 테스트") //콘솔에 출력되는 메소드 이름
     public void save() {
         memberRepository.save(new MemberEntity(Long.valueOf(1),
-                "hong", "1234", "홍길동", "ROLE_USER", LocalDate.now()
+                "hong", "1234", "홍길동", "ROLE_USER", LocalDate.parse("2023-01-01")
         ));
         memberRepository.save(new MemberEntity(Long.valueOf(2),
-                "tom", "1234", "톰아저씨", "ROLE_USER", LocalDate.now()
+                "tom", "1234", "톰아저씨", "ROLE_USER", LocalDate.parse("2023-02-01")
         ));
         memberRepository.save(new MemberEntity(Long.valueOf(3),
-                "admin", "1234", "관리자", "ROLE_ADMIN", LocalDate.now()
+                "admin", "1234", "관리자", "ROLE_ADMIN", LocalDate.parse("2023-03-01")
         ));
 
         List<MemberEntity> list = memberRepository.findAll();
