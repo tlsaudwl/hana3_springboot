@@ -45,7 +45,9 @@ public class MemberEntity {
     @Column
     private String user_role;
     @Column
-    // @DateTimeFormat: DB Date 데이터를 가져올 때, 형식화해줌.
+    // @JsonFormat: @RequestBody @ResponseBody 매핑
+    // @DateTimeFormat: @RequestParam @ModelAttribute 매핑
+    //                  DB Date 데이터를 가져올 때, 형식화해줌.
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate joindate;
 }

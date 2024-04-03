@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>자판기 프로그램</title>
+
+    <!-- 스타일시트 연결하기 -->
+    <link href="./index4.css" rel="stylesheet" type="text/css" />
+
+    <!--  부트스트랩 CDN 링크 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="background-color: black">
+    <div class="wrap">
+      <div class="container">
+        <!-- 타이틀 -->
+        <div class="title-box rounded-top">
+          <h2 id="VMTitle" class="title">★자판기 프로그램★</h2>
+        </div>
+        <!-- 상단메뉴 -->
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="listTextBox bg-white rounded-end text-danger fw-bold">
+            <span id="listTitle" class="listText fw-bold text-danger"
+              >▽ 자판기 상품 목록
+            </span>
+          </div>
+          <!-- 언어 선택 -->
+          <fieldset>
+            <label class="toggleLabel">
+              <span class="toggleFont">한글</span>
+              <input
+                role="switch"
+                type="checkbox"
+                id="changeToEng"
+                class="languageToggle"
+              />
+              <span class="toggleFont">ENG</span>
+            </label>
+          </fieldset>
+          <!-- 코인 모양 -->
+          <div class="coinSlot rounded-pill">
+            <div class="coin"></div>
+          </div>
+        </div>
+        <!-- 상품 목록 -->
+        <div class="list-container">
+          <div class="list">
+            <!-- 상품 목록에 상품 존재 X -->
+
+            <!-- 상품 목록에 상품 존재 O -->
+            <table class="table table-bordered border-danger">
+              <thead>
+                <tr class="text-center">
+                  <!-- { status.count } -->
+                  <th scope="col" id="listNum" class="text-danger">번호</th>
+                  <!-- { product.name } -->
+                  <th scope="col" id="listName">상품명</th>
+                  <!-- { product.price } -->
+                  <th scope="col" id="listPrice">가격</th>
+                  <!-- { product.limit_date } -->
+                  <th scope="col" id="listDate">유통기한</th>
+                  <!--  -->
+                  <th scope="col" id="editTitle">수정</th>
+                  <th scope="col" id="removeTitle">삭제</th>
+                </tr>
+              </thead>
+              <tbody id="product-tbody">
+                <tr class="text-center align-middle">
+                  <th scope="row">1</th>
+                  <td class="text-center align-middle">
+                    베이컨버거
+                  </td>
+                  <td class="text-center align-middle">
+                    10000
+                  </td>
+                  <td class="text-center align-middle">
+                    2024-03-06
+                  </td>
+                  <td class="text-center align-middle">
+                    <a
+                      href="/editProductForm?index=0"
+                      class="btn btn-primary fw-bold editBtn"
+                      role="button"
+                      >수정</a
+                    >
+                  </td>
+                  <td class="text-center align-middle">
+                    <a
+                      href="/deleteProduct?index=0"
+                      class="btn btn-danger fw-bold removeBtn"
+                      role="button"
+                      onclick="return confirmAndNotify(this)"
+                      >삭제</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 총 상품 갯수 -->
+        <div
+          style="margin-bottom: 10px"
+          class="listSizeBox bg-white rounded-start text-danger fw-bold"
+        >
+          <span id="total">▲ 총</span>
+          <span id="product-count" class="text-dark">1</span>
+          <span id="totalNum">개의 상품이 있습니다.</span>
+        </div>
+        <!-- 상품 추가하기 버튼 -->
+        <div style="clear: both" class="d-flex justify-content-center">
+          <a
+            id="addProductButton"
+            href="/addProductForm"
+            class="btn btn-danger fw-bold w-25"
+            role="button"
+            >상품 추가하기 !</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script>
+      //DOM이 로드되고 나서 호출되는 이벤트 콜백 함수
+      window.addEventListener("load", (event) => {
+        getProductList();
+      });
+      function getProductList(){
+        //Restful API 서버에 리스트 요청하기
+        fetch("/api/v1/products", { 
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        })
+        .then((response) => { //HTTP 응답 객체
+          return response.json();
+        })
+        .then((json) => { //JSON JS객체
+          //{ products: [ {name:"불고기버거",price: 1000 ... },
+          //             {name:"불고기버거",price: 1000 ... },
+          //] }
+          console.log( json );
+          //HTML Elememt 생성하기
+          makeProductList( json );
+
+        })
+      }
+      function makeProductList( productList ){
+        let count = document.getElementById("product-count");
+        count.innerText = productList.length;
+
+        let tbody = document.getElementById("product-tbody");
+        tbody.innerHTML = '';
+
+        productList.forEach((product, index) => {
+          let trStr = `<tr class="text-center align-middle">
+            <th scope="row">${index + 1}</th>
+            <td class="text-center align-middle">
+              ${product.name}
+            </td>
+            <td class="text-center align-middle">
+              ${product.price}
+            </td>
+            <td class="text-center align-middle">
+              ${product.limit_date}
+            </td>
+            <td class="text-center align-middle">
+              <button
+                href="/editProductForm?index=${index}"
+                class="btn btn-primary fw-bold editBtn"
+                role="button"
+                onclick="return onEdit(this)"
+                >수정</button
+              >
+            </td>
+            <td class="text-center align-middle">
+              <button
+                href="/deleteProduct?index=${index}"
+                class="btn btn-danger fw-bold removeBtn"
+                role="button"
+                onclick="return confirmAndNotify(this)"
+                >삭제</button
+              >
+            </td>
+          </tr>`;
+
+          tbody.insertAdjacentHTML('beforeend', trStr);
+        });
+
+        
+      }
+      //상품 수정 페이지 요청
+      function onEdit(button) {
+        const url = button.getAttribute("href");
+        //href="/editProductForm?index=0"
+        console.log("url : "+url);
+        
+        window.location.href = url;
+      }
+
+      // 상품 삭제 경고창
+      function confirmAndNotify(button) {
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+        if (confirmation) {
+          //alert("삭제하였습니다!");
+          // "확인"
+          // deleteProduct?index=0
+          const url = button.getAttribute("href");
+          console.log("url : "+url);
+          
+          //fetch("/api/v1/deleteProduct?index=0", { 
+          fetch("/api/v1" + url, {             
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+          })
+          .then((response) => { //HTTP 응답 객체
+            return response.json();
+          })
+          .then((json) => { //JSON JS객체
+            console.log( json );
+            console.log( json.status );
+            if( json.count >= 1 ){
+              getProductList();
+            }
+          })
+        }
+        return false; //GET 요청이 안보내짐.
+      }
+
+      // 언어 선택 토글
+      const VMTitle = document.getElementById("VMTitle");
+      const languageToggle = document.getElementById("changeToEng");
+      const addProductButton = document.getElementById("addProductButton");
+      const total = document.getElementById("total");
+      const totalNum = document.getElementById("totalNum");
+      const listNum = document.getElementById("listNum");
+      const listName = document.getElementById("listName");
+      const listPrice = document.getElementById("listPrice");
+      const listDate = document.getElementById("listDate");
+      const editTitle = document.getElementById("editTitle");
+      const removeTitle = document.getElementById("removeTitle");
+      const listTitle = document.getElementById("listTitle");
+      const editBtn = document.getElementsByClassName("editBtn");
+      const removeBtn = document.getElementsByClassName("removeBtn");
+
+      // 토글 스위치가 변경될 때 버튼 텍스트 변경
+      languageToggle.addEventListener("change", function () {
+        if (this.checked) {
+          // 토글 켬
+          VMTitle.textContent = "★ VENDING MACHINE";
+          listTitle.textContent = "| Product List ▽";
+          addProductButton.textContent = "Add Product";
+          total.textContent = "▲ total (";
+          totalNum.textContent = " item)";
+          listNum.textContent = "Num";
+          listName.textContent = "Name";
+          listPrice.textContent = "Price";
+          listDate.textContent = "LimitDate";
+          editTitle.textContent = "Edit";
+          removeTitle.textContent = "Remove";
+          for (let i = 0; i < editBtn.length; i++) {
+            editBtn[i].textContent = "Edit";
+          }
+          for (let i = 0; i < removeBtn.length; i++) {
+            removeBtn[i].textContent = "Remove";
+          }
+        } else {
+          // 토글 끔
+          VMTitle.textContent = "★ 자판기 프로그램";
+          listTitle.textContent = "| 자판기 상품 목록 ▽";
+          addProductButton.textContent = "상품 추가하기 !";
+          total.textContent = "▲ 총";
+          totalNum.textContent = "개의 상품이 있습니다. |";
+          listNum.textContent = "번호";
+          listName.textContent = "상품명";
+          listPrice.textContent = "가격";
+          listDate.textContent = "유통기한";
+          editTitle.textContent = "수정";
+          removeTitle.textContent = "삭제";
+          for (let i = 0; i < editBtn.length; i++) {
+            editBtn[i].textContent = "수정";
+          }
+          for (let i = 0; i < removeBtn.length; i++) {
+            removeBtn[i].textContent = "삭제";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
