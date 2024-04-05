@@ -18,11 +18,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <style>
-      .form-container {
-        margin: 0 auto;
-      }
-    </style>
+    <script></script>
   </head>
   <body>
     <div class="container-fluid p-4" style="background-color: #eee">
@@ -37,18 +33,22 @@
         >
           <div class="row">
             <!-- 입력폼 -->
-            <form name="formLogin" action="/login" method="post">
-              <div class="form-container col-12 col-lg-6 order-2 order-lg-1">
+            <form
+              name="formJoin"
+              action="http://localhost:8080/login"
+              method="post"
+            >
+              <div class="col-12 col-lg-6 order-2 order-lg-1">
                 <h1 class="my-5 text-center">Login</h1>
-                <div th:if="${message==null}" style="display: none"></div>
-
+                <!-- alert창 -->
                 <div
-                  th:if="${message!=null}"
                   id="alert"
                   class="alert alert-success"
                   role="alert"
-                  th:text="${message}"
+                  th:text="|${message}|"
+                  th:style="${message == '로그인 성공!' ? 'display: block' : 'display: none' }"
                 ></div>
+
                 <div class="mb-3 d-flex flex-row">
                   <div
                     class="d-flex me-2 justify-content-center align-items-center"
@@ -81,11 +81,7 @@
 
                 <div class="mb-3 d-flex flex-row justify-content-center gap-3">
                   <div class="text-center my-5">
-                    <button
-                      id="sendLoginBtn"
-                      type="button"
-                      class="btn btn-primary"
-                    >
+                    <button type="submit" class="btn btn-primary">
                       로그인
                     </button>
                   </div>
@@ -107,37 +103,9 @@
     </div>
 
     <script>
-      const join_form = () => {
-        window.location.href = "/join";
-      };
-      let loginBtn = document.getElementById("sendLoginBtn");
-
-      loginBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        let formName = document.getElementsByName("formLogin")[0];
-
-        if (isEmptyCheck()) {
-          formName.submit();
-        } else {
-          return;
-        }
-      });
-
-      const isEmptyCheck = () => {
-        let inputName = document.getElementById("inputName").value;
-        let inputPw = document.getElementById("inputPw").value;
-
-        if (inputName == "") {
-          alert("이름을 입력해주세요!");
-          document.getElementById("inputName").focus();
-          return false;
-        } else if (inputPw == "") {
-          alert("비밀번호를 입력해주세요!");
-          document.getElementById("inputPw").focus();
-          return false;
-        }
-        return true;
-      };
+      function join_form() {
+        window.location.href = "/join-form";
+      }
     </script>
 
     <script

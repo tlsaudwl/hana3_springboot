@@ -3,6 +3,6 @@ package com.study.Pr07LoginJoin;
 import lombok.Data;
 
 @Data
-public class ResDto {
-    private String message;
+public class ReqDto {
+    private String inputName;
 }

@@ -19,21 +19,20 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-      crossorigin="anonymous"
-    ></script>
-    <style>
-      .form-container {
-        margin: 0 auto;
+    <script>
+      function checkAgreement() {
+        // console.log(document.getElementById("exampleCheck1").checked);
+        if (!document.getElementById("exampleCheck1").checked) {
+          alert("이용약관에 동의해주세요.");
+          return false;
+        }
+        if (!document.getElementById("inputName").value) {
+          alert("이름을 입력해주세요.");
+          return false;
+        }
+        return true;
       }
-    </style>
+    </script>
   </head>
   <body>
     <div class="container-fluid p-4" style="background-color: #eee">
@@ -48,15 +47,23 @@
         >
           <div class="row">
             <!-- 입력폼 -->
-            <form name="formJoin" method="post" action="/join">
-              <div class="form-container col-12 col-lg-6 order-2 order-lg-1">
+            <form
+              name="formJoin"
+              action="http://localhost:8080/join"
+              method="post"
+              onsubmit="return checkAgreement()"
+            >
+              <div class="col-12 col-lg-6 order-2 order-lg-1">
                 <h1 class="my-5 text-center">Sign up</h1>
+                <!-- 중복확인 alert창 -->
                 <div
                   id="alert"
-                  class="alert alert-primary"
+                  class="alert alert-primary d-lg-block"
                   role="alert"
                   style="display: none"
-                ></div>
+                >
+                  중복된 아이디가 있습니다.
+                </div>
                 <div class="mb-3 d-flex flex-row">
                   <div
                     class="d-flex me-2 justify-content-center align-items-center"
@@ -68,13 +75,11 @@
                     class="form-control"
                     id="inputName"
                     name="inputName"
-                    th:value="${name}"
                     placeholder="Your Name"
                   />
                   <button
-                    id="dulBtn"
                     type="button"
-                    onclick="duplicate()"
+                    onclick="fetch_dupl()"
                     class="btn btn-primary ms-1"
                   >
                     중복확인
@@ -128,7 +133,7 @@
                     type="checkbox"
                     class="form-check-input"
                     id="exampleCheck1"
-                    onclick="isCheck()"
+                    value="1"
                   />
                   <label class="form-check-label" for="exampleCheck1"
                     >I agree all statement
@@ -141,18 +146,13 @@
                     <button
                       type="button"
                       class="btn btn-secondary"
-                      onclick="location.href='/'"
+                      onclick="history.back();"
                     >
                       뒤로가기
                     </button>
                   </div>
                   <div class="text-center my-5">
-                    <button
-                      type="button"
-                      id="joinBtn"
-                      class="btn btn-primary"
-                      disabled
-                    >
+                    <button type="submit" class="btn btn-primary">
                       회원가입
                     </button>
                   </div>
@@ -162,7 +162,7 @@
 
             <!-- 이미지 -->
             <div
-              class="form-container col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center align-items-center"
+              class="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center align-items-center"
             >
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
@@ -175,98 +175,41 @@
       </div>
     </div>
     <script>
-      let sendJoinBtn = document.getElementById("joinBtn");
-      let checkbox = document.getElementById("exampleCheck1");
-
-      sendJoinBtn.addEventListener("click", function (e) {
-        let inputName = document.getElementById("inputName").value;
-        let inputEmail = document.getElementById("inputEmail").value;
-        let inputPw = document.getElementById("inputPw").value;
-        let inputPw2 = document.getElementById("inputPw2").value;
-
-        e.preventDefault();
-        let formName = document.getElementsByName("formJoin")[0];
-
-        if (isEmptyCheck(inputName, inputEmail, inputPw, inputPw2)) {
-          if (isEqualPw(inputPw, inputPw2)) {
-            if (checkbox.checked) {
-              formName.submit();
-            } else {
-              alert("약관동의 해주세요!");
-              return;
-            }
-          } else {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-          }
-        } else {
-          return;
-        }
-      });
-
-      const isEmptyCheck = (inputName, inputEmail, inputPw, inputPw2) => {
-        if (inputName == "") {
-          alert("이름을 입력해주세요!");
-          document.getElementById("inputName").focus();
-          return false;
-        } else if (inputEmail == "") {
-          alert("이메일을 입력해주세요!");
-          document.getElementById("inputEmail").focus();
-          return false;
-        } else if (inputPw == "") {
-          alert("비밀번호를 입력해주세요!");
-          document.getElementById("inputPw").focus();
-          return false;
-        } else if (inputPw2 == "") {
-          alert("비밀번호 확인은 필수입니다!");
-          document.getElementById("inputPw2").focus();
-          return false;
-        }
-        return true;
-      };
-
-      const isCheck = () => {
-        checkbox.checked;
-      };
-
-      const isEqualPw = (pw1, pw2) => {
-        if (pw1 === pw2) return true;
-        else return false;
-      };
-
-      const duplicate = () => {
-        let inputName = document.getElementById("inputName").value;
-        fetch("http://localhost:8081/dupli", {
+      function fetch_dupl() {
+        const inputName = document.getElementById("inputName").value;
+        // if (!inputName) {
+        //   alert("아이디를 입력해주세요.");
+        //   return;
+        // }
+        fetch("http://localhost:8080/check", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             inputName,
           }),
         })
-          .then((res) => res.json())
-          .then((data) => {
-            let alertHTML = document.getElementById("alert");
-            let dulBtnHTML = document.getElementById("dulBtn");
-            let joinBtn = document.getElementById("joinBtn");
-
-            if (data.status === "fail-name") {
-              alert(data.message);
-              return;
-            }
-
-            alertHTML.style = "display:show";
-            alertHTML.innerText = data.message;
-
-            if (data.status === "success") {
-              dulBtnHTML.disabled = true;
-              joinBtn.disabled = false;
-            } else if (data.status === "fail") {
-              dulBtnHTML.disabled = false;
-              joinBtn.disabled = true;
-            }
+          .then((response) => {
+            return response.json();
           })
-          .catch((error) => console.error(error));
-      };
+          .then((json) => {
+            console.log(json);
+            document.getElementById("alert").style.display = "block";
+            document.getElementById("alert").innerText = json.message;
+          });
+      }
     </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
