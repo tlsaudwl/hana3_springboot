@@ -177,10 +177,6 @@
 <script>
     function fetch_dupl() {
       const inputName = document.getElementById("inputName").value;
-      // if (!inputName) {
-      //   alert("아이디를 입력해주세요.");
-      //   return;
-      // }
       fetch("http://localhost:8080/check", {
         method: "POST",
         headers: {

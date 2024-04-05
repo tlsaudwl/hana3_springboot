@@ -49,17 +49,17 @@ public class MainController {
     public ResDto checkDuplicate(@RequestBody ReqDto reqDto) {
         String inputName = reqDto.getInputName();
         System.out.println("inputName = " + inputName);
-        boolean isDulp = false;
+        boolean isDupl = false;
         for (Member m : memberList) {
             if (m.getUsername().equals(inputName)) {
-                isDulp = true;
+                isDupl = true;
                 break;
             }
         }
 
         ResDto resDto = new ResDto();
 
-        if (isDulp) {
+        if (isDupl) {
             resDto.setMessage("중복된 아이디가 있습니다.");
         } else {
             resDto.setMessage("사용 가능한 아이디입니다.");

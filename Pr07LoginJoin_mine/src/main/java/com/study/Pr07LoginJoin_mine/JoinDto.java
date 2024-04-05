@@ -12,6 +12,4 @@ public class JoinDto {
     private String inputName;
     private String inputEmail;
     private String inputPw;
-
-
 }
