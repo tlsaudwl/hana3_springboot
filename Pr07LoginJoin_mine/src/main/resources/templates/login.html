@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,9 +40,15 @@
                 >
                     <div class="col-12 col-lg-6 order-2 order-lg-1">
                         <h1 class="my-5 text-center">Login</h1>
-                        <div id="alert" class="alert alert-success" role="alert">
-                            로그인 성공!
-                        </div>
+                        <!-- alert창 -->
+                        <div
+                                id="alert"
+                                class="alert alert-success"
+                                role="alert"
+                                th:text="|${message}|"
+                                th:style="${message == '로그인 성공!' ? 'display: block' : 'display: none' }"
+                        ></div>
+
                         <div class="mb-3 d-flex flex-row">
                             <div
                                     class="d-flex me-2 justify-content-center align-items-center"
