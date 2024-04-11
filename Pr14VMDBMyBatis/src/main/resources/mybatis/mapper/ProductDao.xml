@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.Pr03VM_teacher.dao.IProductDao">
+
+    <select id="list" resultType="com.study.Pr03VM_teacher.dto.ProductDto">
+        SELECT * FROM product
+    </select>
+    <insert id="insertProduct" parameterType="com.study.Pr03VM_teacher.dto.ProductDto">
+        INSERT INTO product (name, price, limit_date) VALUES (#{name}, #{price}, #{limit_date});
+    </insert>
+    <delete id="deleteProduct">
+        DELETE FROM product WHERE id=#{id}
+    </delete>
+
+    <select id="getProductById" resultType="com.study.Pr03VM_teacher.dto.ProductDto">
+        SELECT * FROM WHERE id=#{index}
+    </select>
+    <update id="updateProduct" parameterType="map">
+        UPDATE product
+        SET name = #{product.name},
+        price = #{product.price},
+        limit_date = #{product.limit_date}
+        WHERE id = #{index};
+    </update>
+
+</mapper>
