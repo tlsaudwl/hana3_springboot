@@ -16,7 +16,7 @@
     </delete>
 
     <select id="getProductById" resultType="com.study.Pr03VM_teacher.dto.ProductDto">
-        SELECT * FROM WHERE id=#{index}
+        SELECT * FROM product WHERE id=#{index}
     </select>
     <update id="updateProduct" parameterType="map">
         UPDATE product

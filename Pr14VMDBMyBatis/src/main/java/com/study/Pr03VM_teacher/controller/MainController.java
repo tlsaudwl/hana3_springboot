@@ -58,6 +58,7 @@ public class MainController {
     @GetMapping("/deleteProduct")
     @ResponseBody
     public String deleteProduct(@RequestParam int index){
+
         int res = productDao.deleteProduct( index );
         System.out.println(res);
         return "<script>alert('상품이 삭제되었습니다.'); location.href='/';</script>";
@@ -90,11 +91,8 @@ public class MainController {
             product.setLimit_date( inputLimitDate );
             productDao.updateProduct(product, index);
             return "<script>alert('상품이 수정되었습니다.'); location.href='/';</script>";
-
         } else{
             return "<script>alert('상품이 존재하지 않습니다.'); location.href='/';</script>";
-
         }
-
     }
 }

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class ProductDto {
+    private int id;
     private String name; // 상품명
     private int price; // 가격
     @DateTimeFormat(pattern = "yyyy-MM-dd")

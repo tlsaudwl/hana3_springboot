@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface IProductDao {
     public List<ProductDto> list();
     public int insertProduct(ProductDto product);
-    public int deleteProduct(int id);
+    public int deleteProduct(int index);
     public int updateProduct(ProductDto product, int index);
     public Optional<ProductDto> getProductById(int index);
 }

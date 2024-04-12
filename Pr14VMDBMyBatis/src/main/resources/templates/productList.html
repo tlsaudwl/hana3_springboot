@@ -67,7 +67,7 @@
                 <td th:text="${product.limit_date}" class="text-center align-middle">2024-03-06</td>
                 <td class="text-center align-middle">
                   <a
-                    th:href="|/editProductForm?index=${status.index}|"
+                    th:href="|/editProductForm?index=${product.id}|"
                     class="btn btn-primary fw-bold editBtn"
                     role="button"
                     >수정</a
@@ -75,7 +75,7 @@
                 </td>
                 <td class="text-center align-middle">
                   <a
-                    th:href="|/deleteProduct?index=${status.index}|"
+                    th:href="|/deleteProduct?index=${product.id}|"
                     class="btn btn-danger fw-bold removeBtn"
                     role="button"
                     onclick="return confirmAndNotify(this)"
