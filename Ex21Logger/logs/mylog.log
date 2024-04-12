@@ -1,0 +1,16 @@
+[17:28:59.565][INFO ][com.study.Ex21Logger.LogTest.logStarting:line50] - Starting LogTest using Java 17.0.10 with PID 7056 (started by campus2H024 in C:\Users\campus2H024\hana3_springboot\Ex21Logger)
+[17:28:59.567][DEBUG][com.study.Ex21Logger.LogTest.logStarting:line51] - Running with Spring Boot v3.2.4, Spring v6.1.5
+[17:28:59.568][INFO ][com.study.Ex21Logger.LogTest.logStartupProfileInfo:line654] - No active profile set, falling back to 1 default profile: "default"
+[17:29:00.711][INFO ][com.study.Ex21Logger.LogTest.logStarted:line56] - Started LogTest in 1.361 seconds (process running for 2.262)
+[17:33:04.782][INFO ][com.study.Ex21Logger.LogTest.logStarting:line50] - Starting LogTest using Java 17.0.10 with PID 10492 (started by campus2H024 in C:\Users\campus2H024\hana3_springboot\Ex21Logger)
+[17:33:04.841][DEBUG][com.study.Ex21Logger.LogTest.logStarting:line51] - Running with Spring Boot v3.2.4, Spring v6.1.5
+[17:33:04.842][INFO ][com.study.Ex21Logger.LogTest.logStartupProfileInfo:line654] - No active profile set, falling back to 1 default profile: "default"
+[17:33:05.877][INFO ][com.study.Ex21Logger.LogTest.logStarted:line56] - Started LogTest in 1.351 seconds (process running for 2.172)
+[17:33:06.519][DEBUG][com.study.Ex21Logger.LogTest.testSlf4f:line26] - Slf4j debug ·Î±ë 1
+[17:33:06.522][INFO ][com.study.Ex21Logger.LogTest.testSlf4f:line27] - Slf4j info ·Î±ë 2
+[17:33:06.523][WARN ][com.study.Ex21Logger.LogTest.testSlf4f:line28] - Slf4j warn ·Î±ë 3
+[17:33:06.525][ERROR][com.study.Ex21Logger.LogTest.testSlf4f:line29] - Slf4j error ·Î±ë 4
+[17:33:06.531][DEBUG][com.study.Ex21Logger.LogTest.TestLogger:line18] - debug ·Î±ë 6
+[17:33:06.532][INFO ][com.study.Ex21Logger.LogTest.TestLogger:line19] - info ·Î±ë 7
+[17:33:06.534][WARN ][com.study.Ex21Logger.LogTest.TestLogger:line20] - warn ·Î±ë 8
+[17:33:06.536][ERROR][com.study.Ex21Logger.LogTest.TestLogger:line21] - error ·Î±ë 9
