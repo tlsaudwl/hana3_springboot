@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BoardResponseDto {
     private Long boardIdx;
-    private String boardTitle; //제목
+    private String boardTitle;  //제목
     private String boardContent; //내용
     private String boardName; //작성자
     private Long boardHit; //조회수
-    private LocalDateTime boardDate; //생성일시, 수정일시
+    private LocalDateTime boardDate; //생성일시,수정일시
 
     //필드가 있는 생성자: Entity to Dto
     public BoardResponseDto(Board entity){

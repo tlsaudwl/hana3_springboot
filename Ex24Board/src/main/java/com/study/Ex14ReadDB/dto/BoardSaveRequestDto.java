@@ -14,7 +14,8 @@ public class BoardSaveRequestDto {
 
     //매개변수 있는 생성자
     @Builder
-    public BoardSaveRequestDto(String boardTitle, String boardContent, String boardName, Long boardHit) {
+    public BoardSaveRequestDto(String boardTitle, String boardContent,
+                               String boardName, Long boardHit) {
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.boardName = boardName;

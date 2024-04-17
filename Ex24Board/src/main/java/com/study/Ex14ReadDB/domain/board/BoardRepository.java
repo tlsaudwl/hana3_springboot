@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    //기본함수 : findAll, findById, save, delete
+    // 기본함수: findAll, findById, save, delete
 }
