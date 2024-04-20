@@ -25,7 +25,6 @@ public class MemberSaveRequestDto {
     private LocalDate memberJoinDate = LocalDate.now();
 
     @Builder
-
     public MemberSaveRequestDto(String memberId, String memberPw, String memberName, String memberEmail,
                                 int memberEmailReceive, int memberPwQuestion, String memberPwAnswer,
                                 String memberGender, LocalDate memberBirthDate, LocalDate memberJoinDate) {

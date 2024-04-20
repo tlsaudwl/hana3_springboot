@@ -12,14 +12,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/community/community01")
-    public String community01(){
-        return "/community/community01";
-    }
-    @GetMapping("community01_1")
-    public String community01_1(@RequestParam Long no){
-        return "/community/community01_1";
-    }
     @GetMapping("/company/company01")
     public String company01(){
         return "/company/company01";
