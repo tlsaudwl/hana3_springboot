@@ -12,10 +12,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/passwordFind")
-    public String passwordFind(){
-        return "/member/passwordFind"; //idFind.html 응답
-    }
     @GetMapping("/community/community01")
     public String community01(){
         return "/community/community01";

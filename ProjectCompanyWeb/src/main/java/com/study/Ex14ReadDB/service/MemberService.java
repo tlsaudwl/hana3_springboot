@@ -81,7 +81,6 @@ public class MemberService {
     @Transactional(readOnly = true)
     public String findIdByMemberNameAndMemberEmail(String memberName, String memberEmail) {
         Optional<Member> optional = memberRepository.findIdByMemberNameAndMemberEmail(memberName, memberEmail);
-
         if (optional.isPresent()) {
             return optional.get().getMemberId();
         } else {
@@ -89,5 +88,14 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public String findPwByMemberNameAndMemberEmailAndMemberId(String memberName, String memberEmail, String memberId){
+        Optional<Member> optional = memberRepository.findPwByMemberNameAndMemberEmailAndMemberId(memberName, memberEmail, memberId);
+        if(optional.isPresent()){
+            return optional.get().getMemberPw();
+        } else {
+            return "회원정보가 없습니다";
+        }
+    }
 
 }

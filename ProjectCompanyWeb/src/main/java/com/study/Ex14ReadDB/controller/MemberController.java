@@ -5,16 +5,12 @@ import com.study.Ex14ReadDB.domain.member.Member;
 import com.study.Ex14ReadDB.dto.*;
 import com.study.Ex14ReadDB.service.MemberService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.security.auth.login.LoginException;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/member")
@@ -54,8 +50,6 @@ public class MemberController {
         System.out.println("회원가입 성공");
         return "<script>alert('회원가입 성공');location.href='/';</script>";
     }
-
-
     @PostMapping("/checkDuplicateId")
     @ResponseBody
     public MemberIdDuplicateDto checkDuplicateId(@RequestBody MemberIdDuplicateRequestDto dto) {
@@ -73,7 +67,7 @@ public class MemberController {
         }
     }
 
-    //로그인
+    //로그인, 로그아웃
     @GetMapping("/login")
     public String login(){
         return "/member/login";
@@ -109,7 +103,6 @@ public class MemberController {
         session.setAttribute("loginId", loginId);
         return ResponseEntity.ok("<script>alert('로그인되었습니다'); location.href='/';</script>");
     }
-
     @GetMapping("/logout")
     @ResponseBody
     public String logout(HttpSession session){
@@ -125,14 +118,27 @@ public class MemberController {
     //아이디 찾기
     @GetMapping("/idFind")
     public String idFind(){
-        return "/member/idFind"; //idFind.html 응답
+        return "/member/idFind";
     }
     @PostMapping("/idFindAction")
     public String idFindAction(@RequestParam String userName, @RequestParam String userEmail, Model model) {
-        String result = memberService.findIdByMemberNameAndMemberEmail(userName, userEmail);
-        model.addAttribute("userId", result);
+        String idFind = memberService.findIdByMemberNameAndMemberEmail(userName, userEmail);
+        model.addAttribute("userId", idFind);
 
         return "/member/idFind";
+    }
+
+    //비밀번호 찾기
+    @GetMapping("/passwordFind")
+    public String passwordFind(){
+        return "/member/passwordFind";
+    }
+    @PostMapping("/passwordFindAction")
+    public String passwordFindAction(@RequestParam String userName, @RequestParam String userEmail, @RequestParam String userID, Model model) {
+        String pwFind = memberService.findPwByMemberNameAndMemberEmailAndMemberId(userName, userEmail, userID);
+        model.addAttribute("userPw", pwFind);
+
+        return "/member/passwordFind";
     }
 
 }
