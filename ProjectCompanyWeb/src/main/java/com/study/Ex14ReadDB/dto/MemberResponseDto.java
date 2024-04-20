@@ -1,15 +1,15 @@
 package com.study.Ex14ReadDB.dto;
 
 import com.study.Ex14ReadDB.domain.member.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberResponseDto {
     private Long memberIdx;
     private String memberId;

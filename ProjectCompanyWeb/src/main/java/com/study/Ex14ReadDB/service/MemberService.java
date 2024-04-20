@@ -34,4 +34,48 @@ public class MemberService {
         }
     }
 
+//    @Transactional(readOnly = true)
+//    public MemberResponseDto findByMemberIdAndMemberPw(String memberId, String memberPw) {
+//        Optional<Member> optional = memberRepository.findByMemberIdAndMemberPw(memberId, memberPw);
+//        if (optional.isPresent()) {
+//            return MemberResponseDto.builder()
+//                    .memberId(optional.get().getMemberId())
+//                    .build();
+//        } else {
+//            return null;
+//        }
+//
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public boolean findByMemberPw(String memberPw) {
+//        Optional<Member> optional = memberRepository.findByMemberPw(memberPw);
+//        if (optional.isPresent()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+
+    public enum LoginResult {
+        SUCCESS,
+        ID_NOT_FOUND,
+        INVALID_PASSWORD
+    }
+
+    @Transactional(readOnly = true)
+    public LoginResult login(String loginId, String loginPw) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(loginId);
+        if (optionalMember.isEmpty()) {
+            return LoginResult.ID_NOT_FOUND;
+        }
+
+        Member member = optionalMember.get();
+        if (!member.getMemberPw().equals(loginPw)) {
+            return LoginResult.INVALID_PASSWORD;
+        }
+
+        return LoginResult.SUCCESS;
+    }
+
 }

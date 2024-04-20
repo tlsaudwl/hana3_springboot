@@ -12,7 +12,12 @@
   <div class="top d-none d-md-block">
     <div class="topMenu d-none d-md-block container">
       <span class="home"><a href="/">HOME</a></span>
-      <span><a href="/member/login">LOGIN</a></span>
+      <span th:if="${session.loginId != null}">
+        <span><a href="/member/logout">LOGOUT</a></span>
+      </span>
+      <span th:unless="${session.loginId != null}">
+        <span><a href="/member/login">LOGIN</a></span>
+      </span>
       <span><a href="/member/join">JOIN</a></span>
       <span><a href="/company/company03">CONTACT US</a></span>
     </div>

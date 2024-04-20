@@ -10,14 +10,7 @@ public class MainController {
     public String main(){
         return "index"; //index.html로 응답
     }
-    @GetMapping("/member/login")
-    public String login(){
-        return "/member/login";
-    }
-//    @GetMapping("/member/join")
-//    public String join(){
-//        return "/member/join2"; //join2.html 응답
-//    }
+
     @GetMapping("/idFind")
     public String idFind(){
         return "/member/idFind"; //idFind.html 응답
