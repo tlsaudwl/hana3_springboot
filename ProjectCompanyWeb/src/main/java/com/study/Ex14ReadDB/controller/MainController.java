@@ -11,10 +11,7 @@ public class MainController {
         return "index"; //index.html로 응답
     }
 
-    @GetMapping("/idFind")
-    public String idFind(){
-        return "/member/idFind"; //idFind.html 응답
-    }
+
     @GetMapping("/passwordFind")
     public String passwordFind(){
         return "/member/passwordFind"; //idFind.html 응답

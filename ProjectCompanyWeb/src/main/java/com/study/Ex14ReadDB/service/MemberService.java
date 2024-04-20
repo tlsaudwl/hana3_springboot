@@ -78,4 +78,16 @@ public class MemberService {
         return LoginResult.SUCCESS;
     }
 
+    @Transactional(readOnly = true)
+    public String findIdByMemberNameAndMemberEmail(String memberName, String memberEmail) {
+        Optional<Member> optional = memberRepository.findIdByMemberNameAndMemberEmail(memberName, memberEmail);
+
+        if (optional.isPresent()) {
+            return optional.get().getMemberId();
+        } else {
+            return "회원정보가 없습니다";
+        }
+    }
+
+
 }

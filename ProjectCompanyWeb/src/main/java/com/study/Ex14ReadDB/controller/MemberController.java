@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -119,6 +120,19 @@ public class MemberController {
         session.invalidate(); //세션종료(JSESSIONID 종료), 모든 속성 제거됨.
 
         return "<script>alert('로그아웃되었습니다.'); location.href='/';</script>";
+    }
+
+    //아이디 찾기
+    @GetMapping("/idFind")
+    public String idFind(){
+        return "/member/idFind"; //idFind.html 응답
+    }
+    @PostMapping("/idFindAction")
+    public String idFindAction(@RequestParam String userName, @RequestParam String userEmail, Model model) {
+        String result = memberService.findIdByMemberNameAndMemberEmail(userName, userEmail);
+        model.addAttribute("userId", result);
+
+        return "/member/idFind";
     }
 
 }
