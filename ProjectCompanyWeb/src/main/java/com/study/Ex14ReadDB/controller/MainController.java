@@ -28,29 +28,5 @@ public class MainController {
     public String product01(){
         return "/product/product01";
     }
-    @GetMapping("/customer/customer01")
-    public String customer01(){
-        return "/customer/customer01";
-    }
-    @GetMapping("/customer/customer02")
-    public String customer02(){
-        return "/customer/customer02";
-    }
-    @GetMapping("/customer/customer02_2")
-    public String customer02_2(){
-        return "/customer/customer02_2";
-    }
-    @GetMapping("/customer/customer02_3")
-    public String customer02_3(){
-        return "/customer/customer02_3";
-    }
-    @GetMapping("/customer/customer02_4")
-    public String customer02_4(){
-        return "/customer/customer02_4";
-    }
-    @GetMapping("/customer/customer03")
-    public String customer03(){
-        return "/customer/customer03";
-    }
 
 }

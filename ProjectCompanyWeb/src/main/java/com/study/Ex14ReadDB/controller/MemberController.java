@@ -72,6 +72,15 @@ public class MemberController {
     public String login(){
         return "/member/login";
     }
+//    @GetMapping("/login")
+//    public String login(Model model){
+//        if(model.containsAttribute("errorMessage")) {
+//            model.addAttribute("errorMessage", model.getAttribute("errorMessage"));
+//        }
+//        return "/member/login";
+//    }
+
+
 //    @PostMapping("/loginAction")
 //    @ResponseBody
 //    public String loginAction(HttpSession session, @RequestParam String loginId, @RequestParam String loginPw) {

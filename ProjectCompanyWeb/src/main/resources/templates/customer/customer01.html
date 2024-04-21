@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +41,7 @@
          style="width: 100%; height: 100%;">
     <div class="commonContent2 text-center">
       <div>
-        <h3>COSTOMER</h3>
+        <h3>CUSTOMER</h3>
       </div>
       <div>
         <p><img src="../img/icon-home.png"> > 고객지원 > 1:1문의</p>
@@ -80,11 +79,11 @@
         1:1문의
       </a>
       <ul class="dropdown-menu asd">
-        <li><a class="dropdown-item" href="../customer/costomer01.html">1:1문의</a></li>
+        <li><a class="dropdown-item" href="../customer/customer01.html">1:1문의</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="../customer/costomer02.html">묻고답하기</a></li>
+        <li><a class="dropdown-item" href="../customer/customer02.html">묻고답하기</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="../customer/costomer03.html">FAQ</a></li>
+        <li><a class="dropdown-item" href="../customer/customer03.html">FAQ</a></li>
       </ul>
     </li>
   </ul>
@@ -97,8 +96,8 @@
     <div>1:1문의</div>
     <div>The design and maintenance are excellent.</div>
   </div>
-  <div class="question">
-    <form action="" name="questionForm">
+  <form action="/customer/one2one_insert" method="post" name="one2oneInfo" onsubmit="return checkValue()">
+    <div class="question">
       <table>
         <tr>
           <td>구분</td>
@@ -111,36 +110,150 @@
         </tr>
         <tr>
           <td>성명</td>
-          <td><input type="text" class="inputStyle1" name="name"></td>
+          <td><input type="text" class="inputStyle1" name="one2one_name"></td>
         </tr>
         <tr>
           <td>전화번호</td>
-          <td><input type="text" class="inputStyle1" name="tel"></td>
+          <td><input type="text" class="inputStyle1" name="one2one_phone"></td>
         </tr>
         <tr>
           <td>이메일</td>
-          <td><input type="text" class="inputStyle2" name="email"></td>
+          <td><input type="text" class="inputStyle2" name="one2one_email"></td>
         </tr>
         <tr>
           <td>주소</td>
-          <td><input type="text" class="inputStyle2" name="address"></td>
+          <td>
+            <input type="text" style="margin-bottom:10px;" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호">
+            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" style="margin-bottom:10px;" class="inputStyle1" name="sample6_address" id="sample6_address" placeholder="주소"><br>
+            <input type="text" class="inputStyle1" name="sample6_detailAddress" id="sample6_detailAddress" placeholder="상세주소">
+            <input type="hidden" class="inputStyle1" name="sample6_extraAddress" id="sample6_extraAddress" placeholder="참고항목">
+          </td>
         </tr>
+
         <tr>
           <td>제목</td>
-          <td><input type="text" class="inputStyle2" name="title"></td>
+          <td><input type="text" class="inputStyle2" name="one2one_title"></td>
         </tr>
         <tr>
           <td>설명</td>
-          <td><textarea name="desc" rows="10" style="width: 90%;"></textarea></td>
+          <td><textarea name="one2one_content" rows="10" style="width: 90%;"></textarea></td>
         </tr>
       </table>
-    </form>
-  </div>
-  <div class="btn">
-    <input type="image" src="../img/customer/btn_confirm.gif" onclick="submit()">
-    <input type="image" src="../img/customer/btn_cancel.gif">
-  </div>
+      <input type="hidden" name="one2one_date" id="one2one_date" value="">
+    </div>
+    <div class="btn">
+      <input style="vertical-align: middle;" type="image" src="../img/customer/btn_confirm.gif">
+
+      <a href="/" style="display: inline-block; width: 65px; height: 35px;">
+        <img style="vertical-align: middle;" src="../img/customer/btn_cancel.gif">
+      </a>
+
+    </div>
+  </form>
 </div>
+
+<script>
+
+  function checkValue() {
+    if (!document.one2oneInfo.one2one_name.value) {
+        alert("이름을 입력해주세요");
+        document.getElementById('one2one_name').focus();
+        return false;
+    }
+    if (!document.one2oneInfo.one2one_phone.value) {
+        alert("폰번호를 입력해주세요");
+        document.getElementById('one2one_phone').focus();
+        return false;
+    }
+    if (!document.one2oneInfo.one2one_email.value) {
+        alert("이메일을 입력해주세요");
+        document.getElementById('one2one_email').focus();
+        return false;
+    }
+    if (!document.one2oneInfo.sample6_address.value) {
+        alert("주소를 입력해주세요");
+        document.getElementById('sample6_address').focus();
+        return false;
+    }
+    if (!document.one2oneInfo.one2one_title.value) {
+        alert("제목을 입력해주세요");
+        document.getElementById('one2one_title').focus();
+        return false;
+    }
+    if (!document.one2oneInfo.one2one_content.value) {
+        alert("내용을 입력해주세요");
+        document.getElementById('one2one_content').focus();
+        return false;
+    }
+    return true; // 모든 필드가 채워져 있을 때만 true 반환
+}
+</script>
+
+<script>
+  // 페이지가 로드될 때 현재 날짜를 생성해서 hidden input에 설정
+  window.onload = function() {
+    var currentDate = new Date();
+    var dateString = currentDate.toISOString().slice(0, 10); // YYYY-MM-DD 형식
+    document.getElementById("one2one_date").value = dateString;
+  };
+</script>
+
+
+
+<!-- 다음 우편번호 서비스 API -->
+<!-- http://postcode.map.daum.net/guide -->
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  function sample6_execDaumPostcode() {
+      new daum.Postcode({
+          oncomplete: function(data) {
+              // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+              // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+              // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+              var addr = ''; // 주소 변수
+              var extraAddr = ''; // 참고항목 변수
+
+              //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+              if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                  addr = data.roadAddress;
+              } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                  addr = data.jibunAddress;
+              }
+
+              // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+              if(data.userSelectedType === 'R'){
+                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraAddr += data.bname;
+                  }
+                  // 건물명이 있고, 공동주택일 경우 추가한다.
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                      extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                  if(extraAddr !== ''){
+                      extraAddr = ' (' + extraAddr + ')';
+                  }
+                  // 조합된 참고항목을 해당 필드에 넣는다.
+                  document.getElementById("sample6_extraAddress").value = extraAddr;
+
+              } else {
+                  document.getElementById("sample6_extraAddress").value = '';
+              }
+
+              // 우편번호와 주소 정보를 해당 필드에 넣는다.
+              document.getElementById('sample6_postcode').value = data.zonecode;
+              document.getElementById("sample6_address").value = addr;
+              // 커서를 상세주소 필드로 이동한다.
+              document.getElementById("sample6_detailAddress").focus();
+          }
+      }).open();
+  }
+</script>
 
 <!-- 푸터 -->
 <div th:replace="/fragments/footer.html :: fragment-footer"></div>
