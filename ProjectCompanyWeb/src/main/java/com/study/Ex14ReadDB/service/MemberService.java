@@ -2,12 +2,20 @@ package com.study.Ex14ReadDB.service;
 
 import com.study.Ex14ReadDB.domain.member.Member;
 import com.study.Ex14ReadDB.domain.member.MemberRepository;
+import com.study.Ex14ReadDB.dto.MemberResponseDto;
 import com.study.Ex14ReadDB.dto.MemberSaveRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -97,5 +105,42 @@ public class MemberService {
             return "회원정보가 없습니다";
         }
     }
+
+    @Transactional(readOnly = true)
+    public long memberNum() {
+        return memberRepository.count();
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> findAll() {
+        List<Member> list = memberRepository.findAll();
+        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> findMembersByKeyword(String searchKeyword) {
+        List<Member> list = memberRepository.findMembersByKeyword(searchKeyword.toLowerCase());
+        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> findMembersByMemberId(String searchKeyword) {
+        List<Member> list = memberRepository.findMembersByMemberId(searchKeyword.toLowerCase());
+        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> findMembersByMemberName(String searchKeyword) {
+        List<Member> list = memberRepository.findMembersByMemberName(searchKeyword.toLowerCase());
+        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> findMembersByMemberEmail(String searchKeyword) {
+        List<Member> list = memberRepository.findMembersByMemberEmail(searchKeyword.toLowerCase());
+        return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+
 
 }

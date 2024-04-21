@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>회사홈페이지</title>
   <meta charset="utf-8" />
@@ -32,8 +31,8 @@
 
 <body>
 <!-- 헤더 -->
-<div th:replace="/fragments/headerTop.html :: fragment-headerTop"></div>
-<div th:replace="/fragments/header.html :: fragment-header" class="sticky-top"></div>
+<div th:replace="/fragments/headerTop :: headerTopFragment"></div>
+<div th:replace="/fragments/header :: headerFragment" class="sticky-top"></div>
 
 <!-- 메인 -->
 <!-- COMMON -->
@@ -61,7 +60,7 @@
     <div><p>The design and maintenance are excellent.</p></div>
   </div>
   <div class="loginMain">
-    <form action="adminLoginAction" method="post">
+    <form action="/adminLoginAction" method="post">
       <table class="main1">
         <tr>
           <td>
@@ -69,8 +68,8 @@
             비밀번호
           </td>
           <td>
-            <input type="text" name="member_id" /> <br />
-            <input type="text" name="member_pw" />
+            <input type="text" name="memberId" /> <br />
+            <input type="text" name="memberPw" />
           </td>
           <td>
             <input
@@ -88,7 +87,7 @@
 </div>
 
 <!-- 푸터 -->
-<div th:replace="/fragments/footer.html :: fragment-footer"></div>
+<div th:replace="/fragments/footer :: footerFragment"></div>
 
 <script>
   // back to top 기능
@@ -107,10 +106,10 @@
       console.log("click");
       $("#back-to-top").tooltip("hide");
       $("body,html").animate(
-        {
-          scrollTop: 0,
-        },
-        500
+              {
+                scrollTop: 0,
+              },
+              500
       );
       return false;
     });
