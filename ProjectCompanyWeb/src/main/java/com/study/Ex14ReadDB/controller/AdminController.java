@@ -36,18 +36,14 @@ public class AdminController {
     public String adminLoginAction(@RequestParam String memberId, @RequestParam String memberPw, HttpSession session) {
         AdminService.LoginResult result = adminService.login(memberId, memberPw);
         if (result == AdminService.LoginResult.ID_NOT_FOUND) {
-            // 아이디가 존재하지 않을 때의 처리
             return "redirect:/admin";
         } else if (result == AdminService.LoginResult.INVALID_PASSWORD) {
-            // 비밀번호가 틀렸을 때의 처리
             return "redirect:/admin";
         } else {
-            // 로그인 성공 시 세션에 아이디 저장하고 관리자 페이지로 리다이렉트
             session.setAttribute("adminId", memberId);
             return "redirect:/adminMember";
         }
     }
-
 
     @GetMapping("/adminMember")
     public String adminMember(Model model) {
@@ -62,7 +58,6 @@ public class AdminController {
 
     @GetMapping("/searchMember")
     public String searchMember(@RequestParam String searchSelect, @RequestParam String searchKeyword, HttpSession session, Model model) {
-        // 세션에 검색 옵션과 키워드 저장
         session.setAttribute("searchSelect", searchSelect);
         session.setAttribute("searchKeyword", searchKeyword);
 
@@ -92,7 +87,6 @@ public class AdminController {
 
     @GetMapping("/sortMember")
     public String sortMember(@RequestParam String orderSelect, HttpSession session, Model model) {
-        // 세션에서 검색 옵션과 키워드 가져오기
         String searchSelect = (String) session.getAttribute("searchSelect");
         String searchKeyword = (String) session.getAttribute("searchKeyword");
 
@@ -142,7 +136,6 @@ public class AdminController {
 
     @GetMapping("/pageMember")
     public String pageMember(@RequestParam String pageSelect, @RequestParam String orderSelect, HttpSession session, Model model) {
-        // 세션에서 검색 옵션과 키워드 가져오기
         String searchSelect = (String) session.getAttribute("searchSelect");
         String searchKeyword = (String) session.getAttribute("searchKeyword");
 
@@ -214,7 +207,6 @@ public class AdminController {
 
     @GetMapping("/admin/searchNotice")
     public String searchNotice(@RequestParam String searchSelect, @RequestParam String searchKeyword, HttpSession session, Model model) {
-        // 세션에 검색 옵션과 키워드 저장
         session.setAttribute("searchSelect", searchSelect);
         session.setAttribute("searchKeyword", searchKeyword);
 
@@ -242,7 +234,6 @@ public class AdminController {
 
     @GetMapping("/sortNotice")
     public String sortNotice(@RequestParam(required = false) String orderSelect, HttpSession session, Model model) {
-        // 세션에서 검색 옵션과 키워드 가져오기
         String searchSelect = (String) session.getAttribute("searchSelect");
         String searchKeyword = (String) session.getAttribute("searchKeyword");
 
@@ -294,7 +285,6 @@ public class AdminController {
                 break;
         }
 
-        // 결과를 모델에 추가
         model.addAttribute("notices", notices);
         model.addAttribute("size", notices.size());
         model.addAttribute("selected", orderSelect);
@@ -304,7 +294,6 @@ public class AdminController {
 
     @GetMapping("/pageNotice")
     public String pageNotice(@RequestParam String pageSelect, @RequestParam String orderSelect, HttpSession session, Model model) {
-        // 세션에서 검색 옵션과 키워드 가져오기
         String searchSelect = (String) session.getAttribute("searchSelect");
         String searchKeyword = (String) session.getAttribute("searchKeyword");
 
@@ -372,32 +361,12 @@ public class AdminController {
         return "/admin/admin_notice_write";
     }
 
-//    @PostMapping("/insertNotice")
-//    @ResponseBody
-//    public String insertNotice(@RequestParam String noticeTitle, @RequestParam String editor4, HttpSession session) {
-//        String adminId = (String) session.getAttribute("adminId");
-//        if (adminId == null) {
-//            // 로그인하지 않은 경우 등의 처리
-//            return "<script>alert('로그인 후 이용해주세요.'); location.href='/admin';</script>";
-//        }
-//
-//        CommunitySaveRequestDto dto = new CommunitySaveRequestDto();
-//        dto.setNoticeTitle(noticeTitle);
-//        dto.setNoticeContent(editor4);
-//        dto.setNoticeMemberId(adminId);
-//
-//        boolean isInsert = communityService.save(dto.toSaveEntity());
-//        if (isInsert) {
-//            return "<script>alert('공지사항 등록 성공'); location.href='/adminNotice';</script>";
-//        } else {
-//            return "<script>alert('공지사항 등록 실패'); history.back();</script>";
-//        }
-//    }
-@PostMapping("/insertNotice")
-@ResponseBody
-public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSession session) {
-    String adminId = (String) session.getAttribute("adminId");
-    if (adminId == null) {
+
+    @PostMapping("/insertNotice")
+    @ResponseBody
+    public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSession session) {
+        String adminId = (String) session.getAttribute("adminId");
+        if (adminId == null) {
         // 로그인하지 않은 경우 등의 처리
         return "<script>alert('로그인 후 이용해주세요.'); location.href='/admin';</script>";
     }
@@ -408,27 +377,27 @@ public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSess
         return "<script>alert('공지사항 등록 성공'); location.href='/adminNotice';</script>";
     } else {
         return "<script>alert('공지사항 등록 실패'); history.back();</script>";
+        }
     }
-}
 
 
-//    @GetMapping("/modifyNotice")
-//    public String modifyNotice(@RequestParam Long noticeIdx, Model model) {
-//        CommunityResponseDto dto = communityService.findById(noticeIdx);
-//        model.addAttribute("notice", dto);
-//        return "/admin/admin_notice_view";
-//    }
+    @GetMapping("/modifyNotice")
+    public String modifyNotice(@RequestParam Long noticeIdx, Model model) {
+        CommunityResponseDto dto = communityService.findById(noticeIdx);
+        model.addAttribute("notice", dto);
+        return "/admin/admin_notice_view";
+    }
 
-//    @PostMapping("/modifyNoticeAction")
-//    @ResponseBody
-//    public String modifyNoticeAction(@RequestParam Long noticeIdx, @RequestParam String editor4) {
-//        String updateResult = communityService.update(noticeIdx, editor4);
-//        if (updateResult.equals("success")) {
-//            return "<script>alert('공지사항 수정 성공'); location.href='/adminNotice';</script>";
-//        }else {
-//            return "<script>alert('공지사항 수정 실패'); history.back();</script>";
-//        }
-//    }
+    @PostMapping("/modifyNoticeAction")
+    @ResponseBody
+    public String modifyNoticeAction(@RequestParam Long noticeIdx, @RequestParam String editor4) {
+        String updateResult = communityService.update(noticeIdx, editor4);
+        if (updateResult.equals("success")) {
+            return "<script>alert('공지사항 수정 성공'); location.href='/adminNotice';</script>";
+        }else {
+            return "<script>alert('공지사항 수정 실패'); history.back();</script>";
+        }
+    }
 
 
 }

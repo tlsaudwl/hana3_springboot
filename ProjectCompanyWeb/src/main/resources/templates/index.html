@@ -40,14 +40,14 @@
   </head>
   <body>
     <!-- 헤더 -->
-    <div th:replace="fragments/headerTop :: headerTopFragment" id="headerTop"></div>
-    <div th:replace="fragments/header :: headerFragment" id="header" class="sticky-top"></div>
+    <div th:replace="fragments/headerTop :: fragment-headerTop" id="headerTop"></div>
+    <div th:replace="fragments/header :: fragment-header" id="header" class="sticky-top"></div>
 
     <!-- 메인 -->
     <div th:replace="main :: mainFragment" id="main"></div>
 
     <!-- 푸터 -->
-    <div th:replace="fragments/footer :: footerFragment" id="footer"></div>
+    <div th:replace="fragments/footer :: fragment-footer" id="footer"></div>
 
     <script>
       $(document).ready(function () {

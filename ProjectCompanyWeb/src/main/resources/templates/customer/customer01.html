@@ -29,8 +29,8 @@
 </head>
 <body>
 <!-- 헤더 -->
-<div th:replace="/fragments/headerTop.html :: headerTopFragment"></div>
-<div th:replace="/fragments/header.html :: headerFragment" class="sticky-top"></div>
+<div th:replace="/fragments/headerTop.html :: fragment-headerTop"></div>
+<div th:replace="/fragments/header.html :: fragment-header" class="sticky-top"></div>
 
 <!-- 메인 -->
 <!-- 1:1문의 -->
@@ -186,7 +186,7 @@
         document.getElementById('one2one_content').focus();
         return false;
     }
-    return true; // 모든 필드가 채워져 있을 때만 true 반환
+    return true;
 }
 </script>
 
@@ -194,7 +194,7 @@
   // 페이지가 로드될 때 현재 날짜를 생성해서 hidden input에 설정
   window.onload = function() {
     var currentDate = new Date();
-    var dateString = currentDate.toISOString().slice(0, 10); // YYYY-MM-DD 형식
+    var dateString = currentDate.toISOString().slice(0, 10);
     document.getElementById("one2one_date").value = dateString;
   };
 </script>
@@ -256,6 +256,6 @@
 </script>
 
 <!-- 푸터 -->
-<div th:replace="/fragments/footer.html :: footerFragment"></div>
+<div th:replace="/fragments/footer.html :: fragment-footer"></div>
 </body>
 </html>

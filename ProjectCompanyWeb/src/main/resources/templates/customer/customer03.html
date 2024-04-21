@@ -29,8 +29,8 @@
 </head>
 <body>
 <!-- 헤더 -->
-<div th:replace="/fragments/headerTop.html :: headerTopFragment"></div>
-<div th:replace="/fragments/header.html :: headerFragment" class="sticky-top"></div>
+<div th:replace="/fragments/headerTop.html :: fragment-headerTop"></div>
+<div th:replace="/fragments/header.html :: fragment-header" class="sticky-top"></div>
 
 <!-- 메인 -->
 <!-- 1:1문의 -->
@@ -143,7 +143,7 @@
 </div>
 
 <!-- 푸터 -->
-<div th:replace="/fragments/footer.html :: footerFragment"></div>
+<div th:replace="/fragments/footer.html :: fragment-footer"></div>
 
 </body>
 </html>

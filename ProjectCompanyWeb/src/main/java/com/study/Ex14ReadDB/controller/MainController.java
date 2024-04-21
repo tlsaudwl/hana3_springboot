@@ -10,8 +10,6 @@ public class MainController {
     public String main(){
         return "index"; //index.html로 응답
     }
-
-
     @GetMapping("/company/company01")
     public String company01(){
         return "/company/company01";

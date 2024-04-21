@@ -97,11 +97,8 @@ public class CustomerController {
         List<CustomerQnaDto> searchResult = null;
 
         if (searchType == null || searchType.isEmpty()) {
-            // searchType이 누락되었을 때의 처리
-            // 여기서는 그냥 모든 문의글을 가져오도록 설정합니다.
             searchResult = customerQnaService.getAllNotices();
         } else {
-            // searchType이 제대로 제공되었을 때의 처리
             if (searchType.equals("qnaTitle")) {
                 searchResult = customerQnaService.searchByQnaTitle(keyword);
             } else if (searchType.equals("qnaContent")) {

@@ -86,34 +86,34 @@ public class CommunityService {
         return notice.getNoticeIdx() != 0;
     }
 
-//    @Transactional(readOnly = true)
-//    public CommunityResponseDto findById(Long no) {
-//        Optional<Community> optional = communityRepository.findById(no);
-//        if (optional.isPresent()) {
-//            return CommunityResponseDto.builder()
-//                    .noticeIdx(optional.get().getNoticeIdx())
-//                    .noticeMemberId(optional.get().getNoticeMemberId())
-//                    .noticeTitle(optional.get().getNoticeTitle())
-//                    .noticeContent(optional.get().getNoticeContent())
-//                    .noticeDate(optional.get().getNoticeDate())
-//                    .build();
-//        } else {
-//            return null;
-//        }
-//    }
-//
-//    @Transactional
-//    public String update(Long noticeIdx, String noticeContent) {
-//        Optional<Community> optionalCommunity = communityRepository.findById(noticeIdx);
-//        if (optionalCommunity.isPresent()) {
-//            Community community = optionalCommunity.get();
-//            community.setNoticeContent(noticeContent); // 업데이트할 내용 설정
-//            communityRepository.save(community); // 저장하여 업데이트 수행
-//            return "success";
-//        } else {
-//            return "해당 엔티티를 찾을 수 없습니다.";
-//        }
-//    }
+    @Transactional(readOnly = true)
+    public CommunityResponseDto findById(Long no) {
+        Optional<Community> optional = communityRepository.findById(no);
+        if (optional.isPresent()) {
+            return CommunityResponseDto.builder()
+                    .noticeIdx(optional.get().getNoticeIdx())
+                    .noticeMemberId(optional.get().getNoticeMemberId())
+                    .noticeTitle(optional.get().getNoticeTitle())
+                    .noticeContent(optional.get().getNoticeContent())
+                    .noticeDate(optional.get().getNoticeDate())
+                    .build();
+        } else {
+            return null;
+        }
+    }
+
+    @Transactional
+    public String update(Long noticeIdx, String noticeContent) {
+        Optional<Community> optionalCommunity = communityRepository.findById(noticeIdx);
+        if (optionalCommunity.isPresent()) {
+            Community community = optionalCommunity.get();
+            community.setNoticeContent(noticeContent);
+            communityRepository.save(community);
+            return "success";
+        } else {
+            return "해당 엔티티를 찾을 수 없습니다.";
+        }
+    }
 
 }
 

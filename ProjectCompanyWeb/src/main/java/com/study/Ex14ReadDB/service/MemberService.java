@@ -31,7 +31,6 @@ public class MemberService {
         Member member = memberRepository.save(dto.toSaveEntity());
         return member.getMemberIdx();
     }
-
     @Transactional
     public boolean findByMemberId(String memberId){
         Optional<Member> optional = memberRepository.findByMemberId(memberId);
@@ -41,29 +40,6 @@ public class MemberService {
             return false;
         }
     }
-
-//    @Transactional(readOnly = true)
-//    public MemberResponseDto findByMemberIdAndMemberPw(String memberId, String memberPw) {
-//        Optional<Member> optional = memberRepository.findByMemberIdAndMemberPw(memberId, memberPw);
-//        if (optional.isPresent()) {
-//            return MemberResponseDto.builder()
-//                    .memberId(optional.get().getMemberId())
-//                    .build();
-//        } else {
-//            return null;
-//        }
-//
-//    }
-//
-//    @Transactional(readOnly = true)
-//    public boolean findByMemberPw(String memberPw) {
-//        Optional<Member> optional = memberRepository.findByMemberPw(memberPw);
-//        if (optional.isPresent()) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     public enum LoginResult {
         SUCCESS,
@@ -140,7 +116,6 @@ public class MemberService {
         List<Member> list = memberRepository.findMembersByMemberEmail(searchKeyword.toLowerCase());
         return list.stream().map(MemberResponseDto::new).collect(Collectors.toList());
     }
-
 
 
 }

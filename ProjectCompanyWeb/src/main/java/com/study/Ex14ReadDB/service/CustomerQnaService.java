@@ -53,11 +53,9 @@ public class CustomerQnaService {
 
     @Transactional
     public boolean checkPassword(Long qnaIdx, String password) {
-        // 글 번호에 해당하는 글의 비밀번호를 가져옵니다.
         CustomerQna customerQna = customerQnaRepository.findById(qnaIdx)
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
-        // 입력한 비밀번호와 글의 비밀번호를 비교하여 일치 여부를 반환합니다.
         return customerQna.getQnaPw().equals(password);
     }
 
