@@ -22,6 +22,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+
 public class AdminController {
     private final AdminService adminService;
     private final MemberService memberService;
@@ -228,6 +229,7 @@ public class AdminController {
                 break;
         }
         model.addAttribute("notices", notices);
+        model.addAttribute("size", notices != null ? notices.size() : 0); // 검색 결과의 크기를 모델에 추가
 
         return "/admin/admin_notice";
     }
@@ -286,7 +288,7 @@ public class AdminController {
         }
 
         model.addAttribute("notices", notices);
-        model.addAttribute("size", notices.size());
+        model.addAttribute("size", notices.size()); // 정렬된 결과의 크기를 모델에 추가
         model.addAttribute("selected", orderSelect);
 
         return "/admin/admin_notice";
@@ -317,7 +319,7 @@ public class AdminController {
 
         // 검색 결과가 없을 때 전체 목록을 가져옴
         if (notices == null || notices.isEmpty()) {
-            notices = communityService.getAllNotices(); // 전체 회원 목록 가져오기
+            notices = communityService.getAllNotices(); // 전체 공지사항 목록 가져오기
         }
 
         // 정렬된 결과 가져오기
@@ -328,10 +330,10 @@ public class AdminController {
             case "idDesc":
                 notices.sort(Comparator.comparing(CommunityResponseDto::getNoticeIdx).reversed());
                 break;
-            case "joinDateAsc":
+            case "regDateAsc":
                 notices.sort(Comparator.comparing(CommunityResponseDto::getNoticeDate));
                 break;
-            case "joinDateDesc":
+            case "regDateDesc":
                 notices.sort(Comparator.comparing(CommunityResponseDto::getNoticeDate).reversed());
                 break;
             default:
@@ -356,13 +358,14 @@ public class AdminController {
         return "/admin/admin_notice";
     }
 
-    @GetMapping("/writeNotice")
+
+    @GetMapping("/admin/writeNotice")
     public String writeNotice() {
         return "/admin/admin_notice_write";
     }
 
 
-    @PostMapping("/insertNotice")
+    @PostMapping("/admin/insertNotice")
     @ResponseBody
     public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSession session) {
         String adminId = (String) session.getAttribute("adminId");

@@ -65,7 +65,7 @@ public class CustomerController {
         dto.setOne2oneAddress(address);
 
         // 날짜 설정
-        dto.setOne2oneDate(one2one_date);
+        dto.setOne2oneDate(LocalDate.now());
 
         // 데이터베이스에 저장
         Long newOne2oneIdx = customerService.save(dto);
@@ -143,9 +143,16 @@ public class CustomerController {
 
         return "/customer/customer02_4";
     }
+
+
     @GetMapping("/customer03")
-    public String customer03(){
-        return "/customer/customer03";
+    @ResponseBody
+    public String customer03(HttpSession session) {
+        if (session.getAttribute("loginId") == null) {
+            return "<script>alert('로그인을 해주세요'); location.href='/member/login';</script>";
+        }
+        return "<script>location.href='/customer/one2one';</script>";
     }
+
 
 }

@@ -29,8 +29,8 @@
 </head>
 <body>
 <!-- 헤더 -->
-<div th:replace="/fragments/headerTop.html :: fragment-headerTop"></div>
-<div th:replace="/fragments/header.html :: fragment-header" class="sticky-top"></div>
+<div th:replace="/fragments/headerTop.html :: headerTopFragment"></div>
+<div th:replace="/fragments/header.html :: headerFragment" class="sticky-top"></div>
 
 <!-- 메인 -->
 <!-- 1:1문의 -->
@@ -156,38 +156,54 @@
 <script>
 
   function checkValue() {
-    if (!document.one2oneInfo.one2one_name.value) {
-        alert("이름을 입력해주세요");
-        document.getElementById('one2one_name').focus();
-        return false;
-    }
-    if (!document.one2oneInfo.one2one_phone.value) {
-        alert("폰번호를 입력해주세요");
-        document.getElementById('one2one_phone').focus();
-        return false;
-    }
-    if (!document.one2oneInfo.one2one_email.value) {
-        alert("이메일을 입력해주세요");
-        document.getElementById('one2one_email').focus();
-        return false;
-    }
-    if (!document.one2oneInfo.sample6_address.value) {
-        alert("주소를 입력해주세요");
-        document.getElementById('sample6_address').focus();
-        return false;
-    }
-    if (!document.one2oneInfo.one2one_title.value) {
-        alert("제목을 입력해주세요");
-        document.getElementById('one2one_title').focus();
-        return false;
-    }
-    if (!document.one2oneInfo.one2one_content.value) {
-        alert("내용을 입력해주세요");
-        document.getElementById('one2one_content').focus();
+    if (!document.one2oneInfo.one2one_name.value ||
+        !document.one2oneInfo.one2one_phone.value ||
+        !document.one2oneInfo.one2one_email.value ||
+        !document.one2oneInfo.sample6_address.value ||
+        !document.one2oneInfo.one2one_title.value ||
+        !document.one2oneInfo.one2one_content.value) {
+        alert("모든 필드를 입력해주세요");
         return false;
     }
     return true;
 }
+
+<!--  function checkValue() {-->
+<!--    if (!document.one2oneInfo.one2one_name.value) {-->
+<!--        alert("이름을 입력해주세요");-->
+<!--        document.getElementById('one2one_name').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    if (!document.one2oneInfo.one2one_phone.value) {-->
+<!--        alert("폰번호를 입력해주세요");-->
+<!--        document.getElementById('one2one_phone').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    if (!document.one2oneInfo.one2one_email.value) {-->
+<!--        alert("이메일을 입력해주세요");-->
+<!--        document.getElementById('one2one_email').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    if (!document.one2oneInfo.sample6_address.value) {-->
+<!--        alert("주소를 입력해주세요");-->
+<!--        document.getElementById('sample6_address').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    if (!document.one2oneInfo.one2one_title.value) {-->
+<!--        alert("제목을 입력해주세요");-->
+<!--        document.getElementById('one2one_title').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    if (!document.one2oneInfo.one2one_content.value) {-->
+<!--        alert("내용을 입력해주세요");-->
+<!--        document.getElementById('one2one_content').focus();-->
+<!--        return false;-->
+<!--    }-->
+<!--    return true;-->
+<!--}-->
+</script>
+
+
 </script>
 
 <script>
@@ -256,6 +272,6 @@
 </script>
 
 <!-- 푸터 -->
-<div th:replace="/fragments/footer.html :: fragment-footer"></div>
+<div th:replace="/fragments/footer.html :: footerFragment"></div>
 </body>
 </html>

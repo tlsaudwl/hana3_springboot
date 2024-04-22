@@ -23,8 +23,8 @@
 <body>
 
 <!-- 헤더 -->
-<div th:replace="/fragments/headerTop :: fragment-headerTop"></div>
-<div th:replace="/fragments/header :: fragment-header" class="sticky-top"></div>
+<div th:replace="/fragments/headerTop :: headerTopFragment"></div>
+<div th:replace="/fragments/header :: headerFragment" class="sticky-top"></div>
 
 
 <!-- 메인 -->
@@ -76,7 +76,7 @@
 </div>
 
 <!-- 푸터 -->
-<div th:replace="/fragments/footer :: fragment-footer"></div>
+<div th:replace="/fragments/footer :: footerFragment"></div>
 
 
 <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
