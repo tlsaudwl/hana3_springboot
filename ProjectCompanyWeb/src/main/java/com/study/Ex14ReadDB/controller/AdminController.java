@@ -365,23 +365,48 @@ public class AdminController {
     }
 
 
+//    @PostMapping("/admin/insertNotice")
+//    @ResponseBody
+//    public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSession session) {
+//        String adminId = (String) session.getAttribute("adminId");
+//        if (adminId == null) {
+//        // 로그인하지 않은 경우 등의 처리
+//        return "<script>alert('로그인 후 이용해주세요.'); location.href='/admin';</script>";
+//    }
+//
+//    dto.setNoticeMemberId(adminId);
+//    boolean isInsert = communityService.save(dto.toSaveEntity());
+//    if (isInsert) {
+//        return "<script>alert('공지사항 등록 성공'); location.href='/adminNotice';</script>";
+//    } else {
+//        return "<script>alert('공지사항 등록 실패'); history.back();</script>";
+//        }
+//    }
+
     @PostMapping("/admin/insertNotice")
     @ResponseBody
-    public String insertNotice(@ModelAttribute CommunitySaveRequestDto dto, HttpSession session) {
+    public String insertNotice(@RequestParam("noticeTitle") String noticeTitle,
+                               @RequestParam("noticeContent") String noticeContent,
+                               HttpSession session) {
         String adminId = (String) session.getAttribute("adminId");
         if (adminId == null) {
-        // 로그인하지 않은 경우 등의 처리
-        return "<script>alert('로그인 후 이용해주세요.'); location.href='/admin';</script>";
-    }
+            // 로그인하지 않은 경우 등의 처리
+            return "<script>alert('로그인 후 이용해주세요.'); location.href='/admin';</script>";
+        }
 
-    dto.setNoticeMemberId(adminId);
-    boolean isInsert = communityService.save(dto.toSaveEntity());
-    if (isInsert) {
-        return "<script>alert('공지사항 등록 성공'); location.href='/adminNotice';</script>";
-    } else {
-        return "<script>alert('공지사항 등록 실패'); history.back();</script>";
+        CommunitySaveRequestDto dto = new CommunitySaveRequestDto();
+        dto.setNoticeTitle(noticeTitle);
+        dto.setNoticeContent(noticeContent);
+        dto.setNoticeMemberId(adminId);
+
+        boolean isInsert = communityService.save(dto.toSaveEntity());
+        if (isInsert) {
+            return "<script>alert('공지사항 등록 성공'); location.href='/adminNotice';</script>";
+        } else {
+            return "<script>alert('공지사항 등록 실패'); history.back();</script>";
         }
     }
+
 
 
     @GetMapping("/modifyNotice")
