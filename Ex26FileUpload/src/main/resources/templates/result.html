@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1>upload file 목록</h1>
+<!--<ul th:each="file: ${files}">-->
+    <li>
+        <img th:src="|/upload/eef2b714-2823-4b70-ba36-240056195d05_coffee.jpg|" />
+    </li>
+    <br>
+    <li>
+        <a th:download="coffee.jpg" th:href="|/upload/eef2b714-2823-4b70-ba36-240056195d05_coffee.jpg|">다운로드</a>
+    </li>
+
+    <li>
+        <img th:src="|/upload/eef2b714-2823-4b70-ba36-240056195d05_coffee.jpg|" />
+    </li>
+
+</ul>
+
+</body>
+</html>
