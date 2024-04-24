@@ -1,4 +1,4 @@
-package com.study.Ex14ReadDB.domain.board;
+package com.study.springboot.domain.board;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,30 +31,27 @@ public class Board {
     @Column(name = "board_hit", nullable = false)
     private Long boardHit; //조회수
     @Column(name = "board_date", nullable = false)
-    // @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private LocalDateTime boardDate = LocalDateTime.now(); //생성일시,수정일시
 
-    //매개변수가 있는 생성자
+
+    // 매개변수가 있는 생성자
     @Builder
-    public Board(String boardName, String boardTitle,
-                 String boardContent, Long boardHit) {
+    public Board(String boardName, String boardTitle, String boardContent, Long boardHit) {
         this.boardName = boardName;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.boardHit = boardHit;
     }
 
-    public void update(String boardName, String boardTitle,
-                       String boardContent, Long boardHit) {
+    public void update(String boardName, String boardTitle, String boardContent, Long boardHit) {
         this.boardName = boardName;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.boardHit = boardHit;
-        this.boardDate = LocalDateTime.now(); //현재시간으로 업데이트
+        this.boardDate = LocalDateTime.now(); // 현재시간으로 업데이트
     }
 
     public void updateHit(Long boardHit) {
         this.boardHit = boardHit;
     }
-
 }

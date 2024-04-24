@@ -1,9 +1,11 @@
-package com.study.Ex14ReadDB.controller;
+package com.study.springboot.controller;
 
-import com.study.Ex14ReadDB.domain.board.Board;
-import com.study.Ex14ReadDB.dto.BoardResponseDto;
-import com.study.Ex14ReadDB.dto.BoardSaveRequestDto;
-import com.study.Ex14ReadDB.service.BoardService;
+import com.study.springboot.domain.board.Board;
+import com.study.springboot.dto.BoardResponseDto;
+import com.study.springboot.dto.BoardSaveRequestDto;
+import com.study.springboot.dto.ReplyResponseDto;
+import com.study.springboot.service.BoardService;
+import com.study.springboot.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final ReplyService replyService;
 
     // localhost:8080/board/
     @GetMapping("/")
@@ -65,7 +68,42 @@ public class BoardController {
     }
 
     @GetMapping("/contentForm")
-    public String contentForm(@RequestParam Long boardIdx){
-        return "contentForm";
+    public String contentForm(@RequestParam Long boardIdx,
+                              Model model){
+        System.out.println("boardIdx:"+boardIdx);
+
+        //게시글 목록
+        BoardResponseDto dto = boardService.findById( boardIdx );
+        dto.setBoardHit(dto.getBoardHit());
+        model.addAttribute("dto", dto);
+
+        //조회수 증가
+        boardService.updateHit(boardIdx, dto.getBoardHit() + 1);
+
+        //댓글 목록
+        List<ReplyResponseDto> replyList = replyService.findAllByReplyBoardIdx(boardIdx);
+        model.addAttribute("replyList", replyList);
+
+        return "contentForm"; //contentForm.html로 응답
+    }
+    @PostMapping("/updateAction")
+    @ResponseBody
+    public String updateAction(@ModelAttribute BoardSaveRequestDto dto,
+                               @RequestParam("boardIdx") Long boardIdx){
+        Board entity = boardService.update(boardIdx, dto);
+        if( entity.getBoardIdx() == boardIdx ) {
+            //업데이트 성공
+            //return "<script>alert('글수정 성공'); location.href='/board/listForm';</script>";
+            return "<script>alert('글수정 성공'); location.href='/board/contentForm?boardIdx="+ boardIdx +"';</script>";
+        }else{
+            //업데이트 실패
+            return "<script>alert('글수정 실패'); history.back();</script>";
+        }
+    }
+    @GetMapping("/deleteAction")
+    @ResponseBody
+    public String deleteAction(@RequestParam Long boardIdx){
+        boardService.delete( boardIdx );
+        return "<script>alert('글삭제 성공'); location.href='/';</script>";
     }
 }

@@ -1,6 +1,6 @@
-package com.study.Ex14ReadDB.dto;
+package com.study.springboot.dto;
 
-import com.study.Ex14ReadDB.domain.board.Board;
+import com.study.springboot.domain.board.Board;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class BoardResponseDto {
     private Long boardHit; //조회수
     private LocalDateTime boardDate; //생성일시,수정일시
 
-    //필드가 있는 생성자: Entity to Dto
+    //필드가 있는 생성자: Entoty to Dto
     public BoardResponseDto(Board entity){
         this.boardIdx = entity.getBoardIdx();
         this.boardTitle = entity.getBoardTitle();

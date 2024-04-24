@@ -1,6 +1,6 @@
-package com.study.Ex14ReadDB.dto;
+package com.study.springboot.dto;
 
-import com.study.Ex14ReadDB.domain.board.Board;
+import com.study.springboot.domain.board.Board;
 import lombok.*;
 
 @Getter

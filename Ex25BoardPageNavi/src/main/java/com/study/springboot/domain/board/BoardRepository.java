@@ -1,4 +1,4 @@
-package com.study.Ex14ReadDB.domain.board;
+package com.study.springboot.domain.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
