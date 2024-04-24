@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/")
                         //인증성공 후 별도의 처리가 필요한 경우 커스텀 핸들러를 생성/등록한다
                         .successHandler(((request, response, authentication) -> {
-                            System.out.println("로그인 성공했습니단");
+                            System.out.println("로그인 성공했습니다");
                             response.sendRedirect("/");
                         }))
                         //실패시 에러페이지
